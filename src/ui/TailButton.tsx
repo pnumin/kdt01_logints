@@ -1,12 +1,24 @@
+import { MouseEvent } from "react";
 
-export default function TailButton({caption, color, onClick}) {
-  const bg = {
+type BgT = {
+  "blue" : string;
+  "orange" : string;
+  "lime" : string ;
+}
+
+interface TailButtonProps {
+  caption : string ; 
+  color : "blue" | "orange" |  "lime" ;
+  onClick : (e:MouseEvent<HTMLButtonElement>)=> void;
+} 
+export default function TailButton({caption, color, onClick}:TailButtonProps) {
+  const bg:BgT = {
     "blue" : "bg-blue-700",
     "orange" : "bg-orange-700",
     "lime" : "bg-lime-700",
   }
 
-  const bgHover = {
+  const bgHover:BgT = {
     "blue" : "hover:bg-blue-400",
     "orange" : "hover:bg-orange-400",
     "lime" : "hover:bg-lime-400",

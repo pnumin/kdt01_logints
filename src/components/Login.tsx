@@ -2,38 +2,39 @@ import { useRef } from "react"
 import { useAtom } from "jotai";
 import { isLogin } from "../atoms/IsLoginAtom";
 import { useNavigate } from "react-router-dom";
+import { MouseEvent } from "react";
 
 export default function Login() {
-  const [login, setLogin] = useAtom(isLogin) ;
-  const emailRef = useRef() ;
-  const pwdRef = useRef() ;
+  const [, setLogin] = useAtom(isLogin) ;
+  const emailRef = useRef<HTMLInputElement>(null) ;
+  const pwdRef = useRef<HTMLInputElement>(null) ;
 
   const navigate = useNavigate();
 
-  const handleOk = (e) => {
+  const handleOk = (e:MouseEvent<HTMLButtonElement>) => {
       e.preventDefault(); 
 
-      if ( emailRef.current.value == '') {
+      if ( emailRef.current?.value == '') {
         alert("이메일을 입력하세요.");
-        emailRef.current.focus() ;
+        emailRef.current?.focus() ;
         return ;
       }
 
-      if ( pwdRef.current.value == '') {
+      if ( pwdRef.current?.value == '') {
         alert("비밀번호를 입력하세요.");
-        pwdRef.current.focus() ;
+        pwdRef.current?.focus() ;
         return ;
       }
 
-      if ( emailRef.current.value != 'pnumin@pusan.ac.kr') {
+      if ( emailRef.current?.value != 'pnumin@pusan.ac.kr') {
         alert("해당 이메일이 존재하지 않습니다.");
-        emailRef.current.focus() ;
+        emailRef.current?.focus() ;
         return ;
       }
 
-      if ( pwdRef.current.value != '1234') {
+      if ( pwdRef.current?.value != '1234') {
         alert("비밀번호 오류입니다.");
-        pwdRef.current.focus() ;
+        pwdRef.current?.focus() ;
         return ;
       }
 

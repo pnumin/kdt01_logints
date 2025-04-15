@@ -2,16 +2,34 @@ import sarea from "../db/sarea.json"
 import scode from "../db/scode.json"
 import { useRef, useState, useEffect } from "react"
 
+interface Tdata {
+  [key:string] : string;
+}
+
+interface Sarea {
+  "코드": string;
+  "측정소": string;
+}
+
+interface Scode {
+  [key:string]: {
+    "name": string;
+    "unit": string;
+    "description": string;
+  }
+}
+
 export default function Subway() {
-  const [tdata, setTdata] = useState() ;
-  const [tags, setTags] = useState() ;
+  const [tdata, setTdata] = useState<Tdata | undefined>() ;
+  const [tags, setTags] = useState<React.ReactNode[]>([]) ;
 
-  const refSel = useRef();
-  const ops = sarea.map(item => <option key={item["코드"]} value={item["코드"]}>
-                                  {item["측정소"]}
-                                </option> );
+  const refSel = useRef<HTMLSelectElement>(null);
+  const ops = (sarea as Sarea[]).map((item :Sarea)=> 
+                                          <option key={item["코드"]} value={item["코드"]}>
+                                            {item["측정소"]}
+                                          </option> );
 
-  const getFetchData = async (code) => {
+  const getFetchData = async (code?:string) => {
     let url = `https://apis.data.go.kr/6260000/IndoorAirQuality/getIndoorAirQualityByStation?`;
     url = `${url}serviceKey=${import.meta.env.VITE_APP_API_KEY}`;
     url = `${url}&pageNo=1&numOfRows=10&resultType=json`;
@@ -24,7 +42,7 @@ export default function Subway() {
   }
 
   const handleChange = () => {
-    getFetchData(refSel.current.value);
+    getFetchData(refSel.current?.value);
   }
 
   useEffect(() => {
@@ -36,12 +54,13 @@ export default function Subway() {
 
     console.log(Object.keys(scode))
 
-    const itemKeys = Object.keys(scode) ;
-
-    let tm = itemKeys.map(item => <div key={item} className="flex flex-col justify-center items-center">
+    const itemKeys:string[] = Object.keys(scode as Scode) ;
+    const scodeT = scode as Scode ;
+    
+    let tm = itemKeys.map((item:string) => <div key={item} className="flex flex-col justify-center items-center">
                                     <div className="bg-lime-800 text-white w-full
                                                     border-r border-white">
-                                    {scode[item]["name"]}
+                                    {scodeT[item]["name"]}
                                     </div>
                                     <div className="bg-lime-800 text-white w-full
                                                     border-r border-white">
@@ -50,7 +69,7 @@ export default function Subway() {
                                     <div className="py-2 font-bold text-md text-lime-800
                                                     border border-t-lime-800 w-full">
                                     {tdata[item]}
-                                    {tdata[item] != "-" && scode[item]["unit"]}
+                                    {tdata[item] != "-" && scodeT[item]["unit"]}
                                     </div>
                                   </div>);
 
