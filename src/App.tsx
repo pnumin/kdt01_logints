@@ -5,7 +5,10 @@ import Home from './components/Home';
 import Nav from './components/Nav';
 import Subway from './components/Subway';
 import TodoList from './components/TodoList';
-import TsxTest from './components/TsxTest';
+// import TsxTest from './components/TsxTest';
+import MyClock from './components/02/MyClock';
+import Lotto from './components/05/Lotto';
+import FoodMain from './components/06/FoodMain';
 function App() {
   return (
     <BrowserRouter>
@@ -21,7 +24,9 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/subway' element={<Subway />} />
             <Route path='/todoList' element={<TodoList />} />
-            <Route path='/test' element={<TsxTest />} />
+            <Route path='/clock' element={<MyClock />} />
+            <Route path='/lotto' element={<Lotto />} />
+            <Route path='/food' element={<FoodMain />} />
          </Routes>
       </main>
 

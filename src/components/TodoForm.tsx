@@ -1,25 +1,42 @@
 import TailButton from "../ui/TailButton" 
 import { useRef } from "react"
-export default function TodoForm({addTodo}) {
-  const selRef = useRef() ;
-  const inRef = useRef() ;
+import { completedT } from "../types/Todo";
+import { MouseEvent } from "react";
 
-  const handleClick = (e) => {
+//Props의 타입 정의
+interface TodoFormProps {
+  addTodo : (text:string,completed:completedT) => void ;
+}
+
+//Props의 타입 선언 
+export default function TodoForm({addTodo}:TodoFormProps) {
+  //useRef 훅 타입 선언 
+  const selRef = useRef<HTMLSelectElement>(null) ;
+  const inRef = useRef<HTMLInputElement>(null) ;
+
+  const handleClick = (e:MouseEvent<HTMLButtonElement>) => {
     e.preventDefault() ;
 
-    if (inRef.current.value == "" ) {
+    if (inRef.current?.value == "" ) {
       alert("값을 입력하세요.");
       inRef.current.focus() ;
       return ;
     }
 
-    addTodo(inRef.current.value, selRef.current.value) ;
+    // 입력값이 undefinded가 될경우를 고려하고
+    // select 값이 "O" 와 "X"
+    if (inRef.current)
+        addTodo(inRef.current?.value, selRef.current?.value as completedT) ;
   }
 
-  const handleCancel = (e) => {
-     inRef.current.value = "";
-     inRef.current.focus() ;
-     selRef.current.value = "X" ;
+  const handleCancel = (e:MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault() ;
+
+    // 입력값이 undefinded가 될경우를 고려
+    if (inRef.current) inRef.current.value = "";
+    if (selRef.current) selRef.current.value = "X" ;
+
+    inRef.current?.focus() ;
   }
 
   return (

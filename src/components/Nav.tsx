@@ -23,6 +23,15 @@ export default function Nav() {
         <li className='mx-1 p-2 rounded-sm hover:bg-lime-50 hover:text-lime-700'>
           <Link to="/">홈으로</Link>
         </li>
+        <li className='mx-1 p-2 rounded-sm hover:bg-lime-50 hover:text-lime-700'>
+          <Link to="/clock">시계</Link>
+        </li>
+        <li className='mx-1 p-2 rounded-sm hover:bg-lime-50 hover:text-lime-700'>
+          <Link to="/lotto">로또</Link>
+        </li>
+        <li className='mx-1 p-2 rounded-sm hover:bg-lime-50 hover:text-lime-700'>
+          <Link to="/food">푸드뱅크</Link>
+        </li>
         {login &&
           <li className='mx-1 p-2 rounded-sm hover:bg-lime-50 hover:text-lime-700'>
             <Link to="/subway">지하철대기정보</Link>

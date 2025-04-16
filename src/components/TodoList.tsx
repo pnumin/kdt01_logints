@@ -3,16 +3,22 @@ import axios from "axios"
 import TodoForm from "./TodoForm"
 import TodoItem from "./TodoItem"
 
+//type 폴더에 정의된 타입 가져오기 
+import { Todo, completedT } from "../types/Todo"
+
 const baseurl = "http://localhost:3005/todos"
+
 export default function TodoList() {
-  const [tdata, setTdata] = useState() ; 
+  //useState 타입 정의 
+  const [tdata, setTdata] = useState<Todo[]>([]) ; 
 
   const getData = async() => {
     const resp = await axios.get(baseurl) ;
     setTdata(resp.data) ;
   }
 
-  const addTodo = async(text,completed) =>{
+  // 함수의 인수에 타입 정의 
+  const addTodo = async(text:string,completed:completedT) =>{
     await axios.post(baseurl, {
       text : text,
       completed : completed
@@ -20,20 +26,24 @@ export default function TodoList() {
     getData();
   }
 
-  const handleDelete = async(id) => {
+  // 함수의 인수에 타입 정의 
+  const handleDelete = async(id:string) => {
     await axios.delete(`${baseurl}/${id}`) ;
     
     getData();
   }
 
-  const handleToggle = async(id, completed) => {
-    const done = completed == 'O' ? 'X' : 'O' ;
+  // 함수의 인수에 타입 정의 
+  const handleToggle = async(id:string, completed:completedT) => {
+    const done:completedT = completed == 'O' ? 'X' : 'O' ;
     await axios.patch(`${baseurl}/${id}`, {
       completed : done
     }) ;
     console.log("Toggle", id, completed, done) ;
     getData();
   }
+
+
   useEffect(()=>{
     getData();
   } ,[]);
@@ -50,7 +60,7 @@ export default function TodoList() {
       </div>
       <ul className="w-9/10">
         {
-          tdata && tdata.map(item => <TodoItem key={item.id} 
+          tdata.map((item:Todo) => <TodoItem key={item.id} 
                                                todo= {item} 
                                                onDelete={handleDelete}
                                                onToggle={handleToggle}

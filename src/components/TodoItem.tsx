@@ -1,5 +1,16 @@
 import TailButton from "../ui/TailButton"
-export default function TodoItem({todo, onDelete, onToggle}) {
+//선언된 타입 가져오기 
+import { Todo, completedT } from "../types/Todo"
+
+//Props 타입 정의 
+interface TodoItemProps {
+  todo : Todo;
+  onDelete : (id:string) => void;
+  onToggle : (id:string, completed:completedT) => void;
+}
+
+//Props 타입 지정 
+export default function TodoItem({todo, onDelete, onToggle}:TodoItemProps) {
   return (
     <li className="w-full border border-gray-300 rounded-lg
                     flex justify-between items-center
